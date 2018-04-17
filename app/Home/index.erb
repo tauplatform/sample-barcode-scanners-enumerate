@@ -1,0 +1,29 @@
+<div class="container-fluid">
+
+  <h3>Barcode scanners</h3>
+
+  <ul class="list-group">
+    <% barcodes.each do |item| %>
+      <li class="list-group-item">
+        scannerType: <%= item[:scannerType] %>    </br>
+        friendlyName: <%= item[:friendlyName] %>  </br>
+        index: <%= item[:index] %>                </br>
+        <button data-role="scan" data-scanner-index="<%= item[:index] %>">Scan</button>
+      </li>
+    <% end %>
+  </ul>
+  <br/>
+  <br/>
+</div>
+
+
+<script>
+    $("[data-role=scan]").on('click', function (e) {
+        var scannerIndex = $(e.currentTarget).attr("data-scanner-index");
+        $.post('/app/Home/scan', {index: scannerIndex})
+            .done(function (response) {
+            })
+            .always(function () {
+            });
+    });
+</script>
